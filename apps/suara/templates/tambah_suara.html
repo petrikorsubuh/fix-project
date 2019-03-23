@@ -1,0 +1,87 @@
+{% extends "user_base.html" %}
+{% block css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock css %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        One of three columns
+      </div>
+      <div class="content-wrapper col-md-8" style="
+    margin-top: 49px;">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Tambah Suara
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/suara/">Suara</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah Suara</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-10 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Tambah Suara</h4>
+
+                    <form action="/suara/save" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{form.TPS.id_for_label}}">{{form.tps.label}}</label>
+                            {{form.tps}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.caleg.id_for_label}}">
+                            {{form.caleg.label}}</label>
+                            {{form.caleg}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.jumlah_suara.id_for_label}}">
+                            {{form.jumlah_suara.label}}</label>
+                            {{form.jumlah_suara}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.photo.id_for_label}}">
+                            {{form.pict.label}}</label>
+                            {{form.pict}}
+                            <input type="file" multiple>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</div>
+      <div class="col-md-2">
+        One of three columns
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block js %}
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+// $('#id_tps').select2({
+//   ajax: {
+//     url: 'https://api.github.com/search/repositories',
+//     dataType: 'json'
+//     // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+//   }
+// });
+option = $('#id_dapil').find('option[value=1]');
+option.prop('selected', 'selected')
+$('#id_dapil').val(option.val());
+</script>
+{% endblock js %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Dapil
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Dapil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah Dapil</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title float-left" style="margin-bottom:20px;">DAPIL</h4>
+                   
+
+                    <a class="btn btn-gradient-danger btn-sm float-right" href="/dapil/tambah">Tambah</a>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Dapil</th>
+                                <th>Alamat</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in dapil %}
+                            <tr>
+                                <td>
+                                    {{a.name}}
+                                </td>
+                                <td>
+                                    {{a.address}}
+                                </td>
+                                <td class="text-center">
+                                    <a href="/dapil/edit/{{a.id}}" class="btn btn-success btn-sm">
+                                        Ubah
+                                    </a>
+                                    <a href="/dapil/delete/{{a.id}}" class="btn btn-info btn-sm">Hapus</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+
+

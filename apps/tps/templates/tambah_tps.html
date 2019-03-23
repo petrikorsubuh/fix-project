@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Tambah TPS
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/tps/">TPS</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah TPS</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Tambah TPS</h4>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{form.kecamatan.id_for_label}}">
+                                {{form.kecamatan.label}}</label>
+                            {{form.kecamatan}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.kecamatan.id_for_label}}">
+                                {{form.kelurahan.label}}</label>
+                            {{form.kelurahan}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.address.id_for_label}}">
+                                {{form.address.label}}</label>
+                            {{form.address}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.name.id_for_label}}">
+                                {{form.name.label}}</label>
+                            {{form.name}}
+                        </div>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

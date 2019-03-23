@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Tambah User
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/account/">User</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Tambah User</h4>
+
+                    <form action="/account/save" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                            {{form.name}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.email.id_for_label}}">
+                            {{form.email.label}}</label>
+                            {{form.email}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.user_name.id_for_label}}">
+                            {{form.username.label}}</label>
+                            {{form.username}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.pasword_user.id_for_label}}">
+                            {{form.password.label}}</label>
+                            {{form.password}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.no_telpon.id_for_label}}">
+                            {{form.no_telpon.label}}</label>
+                            {{form.no_telpon}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.nik.id_for_label}}">
+                            {{form.nik.label}}</label>
+                            {{form.nik}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{form.gambar.id_for_label}}">
+                            {{form.gambar.label}}</label>
+                            {{form.gambar}}
+                        </div>
+
+                        <div class="form-check form-check-flat form-check-primary">
+                                <label class="form-check-label">
+                                  <input name="superuser" type="checkbox" class="form-check-input">
+                                  Superuser
+                                <i class="input-helper"></i></label>
+                              </div>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</div>
+
+{% endblock %}

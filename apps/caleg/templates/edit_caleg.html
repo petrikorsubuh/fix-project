@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Edit Caleg
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/caleg/">Caleg</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Caleg</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Caleg</h4>
+
+                    <form action="/caleg/update" method="post">
+                        {% csrf_token %}
+                        {{form.id}}
+                        <div class="form-group">
+                            <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                            {{form.name}}
+                        <div class="form-group">
+                            <label for="{{form.no_urut.id_for_label}}">
+                                {{form.no_urut.label}}</label>
+                            {{form.no_urut}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.dapil.id_for_label}}">
+                                {{form.dapil.label}}</label>
+                            {{form.dapil}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.partai.id_for_label}}">
+                                {{form.partai.label}}</label>
+                            {{form.partai}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.kategori.id_for_label}}">
+                                {{form.kategori.label}}</label>
+                            {{form.kategori}}
+                        </div>
+                            <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

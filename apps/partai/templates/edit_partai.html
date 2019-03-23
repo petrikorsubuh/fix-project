@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>
+            </span>
+            Edit Partai
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/partai/">Partai</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Partai</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit Partai</h4>
+
+                    <form action="/partai/update/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.id}}
+                        <div class="form-group">
+                            <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
+                            {{form.name}}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{form.no_urut.id_for_label}}">
+                                {{form.no_urut.label}}</label>
+                            {{form.no_urut}}
+                        </div>
+                        <div class="custom-file">
+
+                            {{form.gambar}}
+                            <label class="custom-file-label" for="{{form.gambar.id_for_label}}">
+                                {{form.gambar.label}}</label>
+
+                        </div>
+                        <button class="btn btn-primary" style="margin-top:25px;" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

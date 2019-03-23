@@ -14,8 +14,40 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from apps.build import views
+from apps.dapil import views as views_dapil
+from apps.account import views as views_account
+from apps.authentication import views as views_aut
+from config.views import Index
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
+    path('',Index.as_view() ),
     path('admin/', admin.site.urls),
-]
+    path('index', views.IndexView.as_view()),
+    path('language/save', views.SaveLanguageView.as_view()),
+    path('language/edit/<int:id>', views.EditLanguageView.as_view()),
+    path('language/update', views.UpdateLanguageView.as_view()),
+    path('language/delete/<int:id>', views.DeleteLanguageView.as_view()),
+
+
+    path('dapil/', include(('apps.dapil.urls', 'dapil'), namespace='dapil')),
+    path('kategori/',include(('apps.kategori.urls','kategori'),namespace='kategori')),
+    path('caleg/',include(('apps.caleg.urls','caleg'),namespace='caleg')),
+    path('tps/',include(('apps.tps.urls','tps'),namespace='tps')),
+    path('partai/',include(('apps.partai.urls','partai'),namespace='partai')),
+    path('account/',include(('apps.account.urls','account'),namespace='account')),
+    
+    
+    
+    path('suara/',include(('apps.suara.urls','suara'),namespace='suara')),
+
+    # login
+    path('login/', include(('apps.authentication.urls', 'login'), namespace='login')),
+    path('logout/', views_aut.LogOutView.as_view(), name='logout'),
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
