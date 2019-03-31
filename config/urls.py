@@ -36,6 +36,8 @@ urlpatterns = [
 
 
     path('dapil/', include(('apps.dapil.urls', 'dapil'), namespace='dapil')),
+    path('kecamatan/', include(('apps.kecamatan.urls', 'dapil'), namespace='kecamatan')),
+    path('kelurahan/', include(('apps.kelurahan.urls', 'dapil'), namespace='kelurahan')),
     path('kategori/',include(('apps.kategori.urls','kategori'),namespace='kategori')),
     path('caleg/',include(('apps.caleg.urls','caleg'),namespace='caleg')),
     path('tps/',include(('apps.tps.urls','tps'),namespace='tps')),

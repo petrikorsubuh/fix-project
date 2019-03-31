@@ -20,3 +20,4 @@ class CalegForm(forms.Form):
     no_urut =forms.IntegerField(label="Nomor Urut", widget=forms.TextInput(attrs={
         "class": "form-control",
     }))
+    ispartai =forms.CharField(label="Apakah ini partai?", required=False)

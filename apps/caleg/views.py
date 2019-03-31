@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.views import View
 
 from apps.caleg import models
+from django.http import HttpResponse
 from apps.caleg import forms
 from braces.views import LoginRequiredMixin, SuperuserRequiredMixin
 
@@ -30,9 +31,14 @@ class SaveCalegView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             caleg.dapil = form.cleaned_data['dapil']
             caleg.partai = form.cleaned_data['partai']
             caleg.kategoricaleg = form.cleaned_data['kategori']
+            ispartai = form.cleaned_data['ispartai']
+            if ispartai == 'on':
+                caleg.isprtai = True
             caleg.save()
 
-        return redirect('/caleg')
+            return redirect('/caleg')
+            
+        return HttpResponse(form.errors)
 
 
 class EditCalegView(LoginRequiredMixin,SuperuserRequiredMixin,View):

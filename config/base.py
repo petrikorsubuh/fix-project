@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'apps.partai',
     'apps.tps',
     'apps.authentication',
+    'apps.kecamatan',
+    'apps.kelurahan',
 ]
 
 MIDDLEWARE = [

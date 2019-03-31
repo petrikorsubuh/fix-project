@@ -21,10 +21,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title float-left" style="margin-bottom:20px;">CALEG</h4>
-                   
+
 
                     <a class="btn btn-gradient-danger btn-sm float-right" href="/caleg/tambah">Tambah</a>
-                    <table class="table table-striped table-hover">
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>Nama</th>
@@ -32,6 +32,7 @@
                                 <th>Dapil</th>
                                 <th>Partai</th>
                                 <th>Kategori</th>
+                                <th>Jenis</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -53,17 +54,25 @@
                                 <td>
                                     {{a.kategoricaleg}}
                                 </td>
-                                
+                                <td>
+                                    {% if a.ispartai %}
+                                    PARTAI
+                                    {% else %}
+                                    CALEG
+                                    {% endif %}
+                                </td>
+
                                 <td class="text-center">
                                     <a href="/caleg/edit/{{a.id}}" class="btn btn-success btn-sm">
                                         Ubah
                                     </a>
-                                    <a href="/caleg/delete/{{a.id}}" class="btn btn-info btn-sm">Hapus</a>
+                                    <a onclick="return confirm('Benar akan dihapus?')" href="/caleg/delete/{{a.id}}"
+                                        class="btn btn-info btn-sm">Hapus</a>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
-                        
+
 
 
                     </table>
@@ -73,6 +82,8 @@
     </div>
 
     {% endblock %}
-
-
-
+    {% block script %}
+    <script>
+        $('#example').DataTable()
+    </script>
+    {% endblock script %}

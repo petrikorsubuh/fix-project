@@ -1,25 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <a href="/suara/tambah">klik</a>
-    <a href="/logout">klik</a>
-    <input type="file" accept="image/*;capture=camera" capture="camera" />
-    <img id="frame">
-    <script>
-            var camera = document.getElementById('camera');
-            var frame = document.getElementById('frame');
-          
-            camera.addEventListener('change', function(e) {
-              var file = e.target.files[0];
-              // Do something with the image file.
-              frame.src = URL.createObjectURL(file);
-            });
-          </script>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title">
+            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-account-box"></i>
+            </span>
+            Users
+        </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Users</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" style="margin-bottom:20px;">USERS</h4>
+                   
+
+                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>User Name</th>
+                                <th>Telepon</th>
+                                <th>NIK</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in account %}
+                            <tr>
+                                <td>
+                                    {{a.name}}
+                                </td>
+                                <td>
+                                    {{a.user.email}}
+                                </td>
+                                <td>
+                                    {{a.user.username}}
+                                </td>
+                                <td>
+                                    {{a.no_telpon}}
+                                </td>
+                                <td>
+                                    {{a.nik}}
+                                </td>
+                                <td class="text-center">
+                                    <a href="/account/edit/{{a.id}}" class="btn btn-success btn-sm">
+                                        Ubah
+                                    </a>
+                                    <a href="/account/delete/{{a.id}}" class="btn btn-info btn-sm">Hapus</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <a class="btn btn-gradient-danger btn-sm float-right" href="/account/tambah" ">Tambah</a>
+                        </tbody>
+                        
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block script %}
+      <script>
+          $('#example').DataTable()
+      </script>
+    {% endblock script %}

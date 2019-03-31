@@ -3,7 +3,7 @@ from ..base import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pemilu_db_1',
+        'NAME': 'qcount',
         'USER': 'root',
         'PASSWORD': '29494*',
         'HOST': 'localhost',  # set in docker-compose.yml

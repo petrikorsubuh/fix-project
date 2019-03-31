@@ -7,7 +7,7 @@ class DapilForm(forms.Form):
         "class": "form-control",
         "required": True
     }))
-    address = forms.CharField(label="address dapil", widget=forms.Textarea(attrs={
+    alamat = forms.CharField(label="Alamat dapil", widget=forms.Textarea(attrs={
         "class": "form-control",
         "rows": 3
     }))

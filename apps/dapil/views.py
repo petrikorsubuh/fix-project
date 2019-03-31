@@ -30,7 +30,7 @@ class SaveDapilView(LoginRequiredMixin, SuperuserRequiredMixin, View):
         if dap.is_valid():
             dapil = models.Dapil()
             dapil.name = dap.cleaned_data['name']
-            dapil.address = dap.cleaned_data['address']
+            dapil.alamat = dap.cleaned_data['alamat']
             dapil.save()
         return redirect('/dapil')
 
@@ -44,7 +44,7 @@ class EditDapilView(LoginRequiredMixin, SuperuserRequiredMixin, View):
         data = {
             'id': obj.id,
             'name': obj.name,
-            'address': obj.address,
+            'alamat': obj.alamat,
         }
 
         form = forms.DapilForm(initial=data)
@@ -63,7 +63,7 @@ class UpdateDapilView(LoginRequiredMixin, SuperuserRequiredMixin, View):
         if dap.is_valid():
             dapil = models.Dapil.objects.get(id=dap.cleaned_data['id'])
             dapil.name = dap.cleaned_data['name']
-            dapil.address = dap.cleaned_data['address']
+            dapil.alamat = dap.cleaned_data['alamat']
             dapil.save()
         return redirect('/dapil')
 
@@ -96,6 +96,6 @@ class TambahDapilView(LoginRequiredMixin, SuperuserRequiredMixin, View):
         if dap.is_valid():
             dapil = models.Dapil()
             dapil.name = dap.cleaned_data['name']
-            dapil.address = dap.cleaned_data['address']
+            dapil.alamat = dap.cleaned_data['alamat']
             dapil.save()
         return redirect('/dapil')

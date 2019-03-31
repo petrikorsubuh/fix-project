@@ -3,15 +3,8 @@ from django import forms
 
 class TpsForm(forms.Form):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
-    kecamatan = forms.CharField(label="kecamatan", widget=forms.TextInput(attrs={
-        "class": "form-control",
-        "required": True
-    }))
-    kelurahan = forms.CharField(label="kelurahan", widget=forms.TextInput(attrs={
-        "class": "form-control",
-        "required": True
-    }))
-    address = forms.CharField(label="address", widget=forms.TextInput(attrs={
+    kelurahan = forms.CharField()
+    alamat = forms.CharField(label="alamat", widget=forms.TextInput(attrs={
         "class": "form-control",
         "required": True
     }))

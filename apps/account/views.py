@@ -52,7 +52,7 @@ class SaveAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
             account.save()
             return redirect('/account')
 
-        return HttpResponse(form.errors)
+            return HttpResponse(form.errors)
 
 class EditAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url='/login'

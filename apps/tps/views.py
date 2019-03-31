@@ -4,6 +4,8 @@ from django.views import View
 from apps.tps import models
 from apps.tps import forms
 
+from apps.kelurahan.models import Kelurahan
+
 from braces.views import LoginRequiredMixin,SuperuserRequiredMixin
 
 class IndexTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
@@ -25,13 +27,15 @@ class SaveTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     def post(self, request):
         form = forms.TpsForm(request.POST)
         if form.is_valid():
+            kl_id = form.cleaned_data['kl_id']
+            kelurahan = Kelurahan.objects.get(id = kl_id)
+
             tps = models.Tps()
-            tps.kecamatan = form.cleaned_data['kecamatan']
-            tps.kelurahan = form.cleaned_data['kelurahan']
-            tps.address = form.cleaned_data['address']
+            tps.kelurahan =kelurahan
+            tps.alamat = form.cleaned_data['address']
             tps.name = form.cleaned_data['name']
             tps.save()
-        return redirect('/tps')
+            return redirect('/tps')
 
 
 class EditTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
@@ -41,9 +45,8 @@ class EditTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
         obj=models.Tps.objects.get(id=id)
         data ={
             'id':obj.id,
-            'kecamatan':obj.kecamatan,
-            'kelurahan':obj.kelurahan,
-            'address':obj.address,
+            'id':obj.kelurahan,
+            'alamat':obj.alamat,
             'name':obj.name,
         }
 
@@ -72,13 +75,15 @@ class UpdateTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
         form = forms.TpsForm(request.POST)
 
         if form.is_valid():
+            kl_id = form.cleaned_data['kl_id']
+            kelurahan = Kelurahan.objects.get(id = kl_id)
+
             tps = models.Tps.objects.get(id=form.cleaned_data['id'])
-            tps.kecamatan = form.cleaned_data['kecamatan']
-            tps.kelurahan = form.cleaned_data['kelurahan']
-            tps.address = form.cleaned_data['address']
+            tps.kelurahan = kelurahan
+            tps.alamat = form.cleaned_data['alamat']
             tps.name = form.cleaned_data['name']
             tps.save()
-        return redirect ('/tps')
+            return redirect ('/tps')
 
     
 
@@ -106,10 +111,12 @@ class TambahTpsView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     def post(self, request):
         form = forms.TpsForm(request.POST)
         if form.is_valid():
+            kl_id = form.cleaned_data['kl_id']
+            kelurahan = Kelurahan.objects.get(id = kl_id)
+
             tps=models.Tps()
-            tps.kecamatan = form.cleaned_data['kecamatan']
-            tps.kelurahan = form.cleaned_data['kelurahan']
-            tps.address = form.cleaned_data['address']
+            tps.kelurahan = kelurahan
+            tps.alamat = form.cleaned_data['alamat']
             tps.name = form.cleaned_data['name']
             tps.save()
-        return redirect('/tps')
+            return redirect('/tps')
