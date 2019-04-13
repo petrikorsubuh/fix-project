@@ -8,6 +8,10 @@ from apps.account import models
 from braces.views import LoginRequiredMixin,SuperuserRequiredMixin
 
 
+from django.views.generic import CreateView,UpdateView
+from apps.account.models import Account
+from apps.account.forms import AccountForm
+
 class IndexAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
     template_name = 'account.html'
 
@@ -21,7 +25,6 @@ class IndexAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
         })
 
 
-class SaveAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
 
 
     login_url='/login'
@@ -33,7 +36,6 @@ class SaveAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
             user.set_password(form.cleaned_data['password'])
             user.email = form.cleaned_data['email']
 
-            superuser = form.cleaned_data['superuser']
             
             if superuser == 'on':
                 user.is_superuser = True
