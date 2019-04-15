@@ -7,7 +7,7 @@ from apps.kecamatan.models import Kecamatan
 from apps.kelurahan.models import Kelurahan
 # Create your models here.
 class Suara(models.Model):
-    caleg = models.ForeignKey(Caleg,on_delete=models.CASCADE,null=True)
+    caleg = models.ForeignKey(Caleg,on_delete=models.CASCADE,null=True,related_name='suaras')
     kecamatan = models.ForeignKey(Kecamatan,on_delete=models.CASCADE,null=True)
     kelurahan = models.ForeignKey(Kelurahan,on_delete=models.CASCADE,null=True)
     tps = models.ForeignKey(Tps,on_delete=models.CASCADE,null=True)

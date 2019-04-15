@@ -16,18 +16,43 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
   <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.min.css' %}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
 </head>
+
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     {% include 'public_header.html' %}
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title" style="margin-top: 100px">Caleg Demokrat</h4>
+          <canvas id="barChart"  width="400px;" height="400px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Suara Partai</h4>
+
+          <canvas id="pieChart" width="400px;" height="400px;"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- container-scroller -->
   <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
   <!-- plugins:js -->
   <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
   <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
@@ -39,6 +64,105 @@
   <script src="{% static 'js/dashboard.js' %}"></script>
   <script src="{% static 'js/lightbox-plus-jquery.min.js' %}"></script>
   <!-- End custom js for this page-->
+
+
+  {% autoescape off %}
+  <script>
+
+    var data1 = {
+      labels: {{ labels }},
+    datasets: [{
+      label: 'Jumlah Suara',
+      data: {{ values }},
+      backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+      borderColor: [
+      'rgba(255,99,132,1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
+    var ctx = document.getElementById('barChart').getContext('2d');
+    var barChart = new Chart(ctx, {
+      type: 'bar',
+      data: data1,
+      options: {
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
+      }
+    });
+    
+    
+    var data2 = {
+      labels: {{ labels1 }},
+    datasets: [{
+      label: 'Jumlah Suara',
+      data: {{ values1 }},
+      backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+      borderColor: [
+      'rgba(255,99,132,1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
+    var ctx = document.getElementById('pieChart').getContext('2d');
+    var pieChart = new Chart(ctx, {
+      type: 'pie',
+      data: data2,
+      options: {
+        scales: {
+          xAxes: [{
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
+          }]
+        }
+      }
+    });
+
+    // if ($("#barChart").length) {
+    //   var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    //   // This will get the first returned node in the jQuery collection.
+    //   var barChart = new Chart(barChartCanvas, {
+    //     type: 'bar',
+    //     data: data1,
+    //     // options: options
+    //   });
+    // }
+  </script>
+  {% endautoescape %}
 </body>
 
 </html>

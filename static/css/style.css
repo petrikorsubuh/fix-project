@@ -17767,9 +17767,10 @@ input:focus {
 .navbar.default-layout-navbar .navbar-brand-wrapper .navbar-brand img {
   width: calc(260px - 120px);
   max-width: 100%;
-  height: 28px;
+  height: 63px;
   margin: auto;
   vertical-align: middle;
+  width: 68px;
 }
 
 .navbar.default-layout-navbar .navbar-brand-wrapper .brand-logo-mini img {

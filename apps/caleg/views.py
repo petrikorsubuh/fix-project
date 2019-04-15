@@ -35,8 +35,8 @@ class SaveCalegView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             caleg.dapil = form.cleaned_data['dapil']
             caleg.partai = form.cleaned_data['partai']
             caleg.kategoricaleg = form.cleaned_data['kategori']
-            ispartai = form.cleaned_data['ispartai']
-            if ispartai == 'on':
+            isprtai = form.cleaned_data['ispartai']
+            if isprtai == 'on':
                 caleg.isprtai = True
             caleg.save()
 
