@@ -1,0 +1,285 @@
+{% extends "user_base.html" %}
+{% block css %}
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static "/css/select2-bootstrap4.min.css" %}">
+{% endblock css %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            One of three columns
+        </div>
+        <div class="content-wrapper col-md-8" style="
+    margin-top: 49px;">
+            <div class="page-header">
+                <h3 class="page-title">
+                    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                        <i class="mdi mdi-home"></i>
+                    </span>
+                    Tambah Suara
+                </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/suara/">Suara</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Suara</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-10 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Tambah Suara</h4>
+
+                            <form action="{% url 'relawan:save' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="{{form.partai.id_for_label}}">{{form.partai.label}}</label>
+                                    <select class="form-control" name="partai" required id="id_partai">
+                                        <option value="">==== Pilih partai ====</option>
+                                        {% for pt in partais %}
+                                        <option value="{{pt.id}}">{{pt.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.caleg.id_for_label}}">{{form.caleg.label}}</label>
+                                    <select class="form-control" name="caleg" id="id_caleg">
+                                        <option value="">==== Pilih caleg ====</option>
+                                        {% for cl in caleg %}
+                                        <option value="{{cl.id}}">{{cl.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.kecamatan.id_for_label}}">{{form.kecamatan.label}}</label>
+                                    <select class="form-control" name="kecamatan" id="id_kecamatan">
+                                        <option value="">==== Pilih kecamatan ====</option>
+                                        {% for kc in kecamatans %}
+                                        <option value="{{kc.id}}">{{kc.nama}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.kelurahan.id_for_label}}">{{form.kelurahan.label}}</label>
+                                    <select class="form-control" name="kelurahan" id="id_kelurahan" disabled>
+
+                                    </select>
+                                </div>
+                                <div class="input-group  mb-3">
+                                    <!-- <label for="{{form.tps.id_for_label}}">{{form.tps.label}}</label> -->
+                                    <select class="form-control" name="tps" id="id_tps" aria-placeholder="Pilih TPS"
+                                        style="height: calc(2.5rem + 4px)" disabled>
+                                        <option value="null" selected>==== Pilih tps ====</option>
+                                        {% for tp in tpss %}
+                                        <option value="{{tp.id}}">{{tp.nama}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" disabled type="button" id="openModal">Tambah
+                                            TPS</button>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.jumlah_suara.id_for_label}}">{{form.jumlah_suara.label}}</label>
+                                    {{form.jumlah_suara}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.pict.label}}">{{form.pict.label}}</label>
+                                    {{form.pict}}
+                                    <!-- <input type="file" name="pict" multiple> -->
+                                </div>
+                                <button class="btn btn-primary" type="submit">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" tabindex="-1" id="modalTPS" role="dialog" aria-labelledby="modalTambahTPSTitle">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTambahTPSTitle">Tambah TPS</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="tps_nama">Nama TPS</label>
+                                    <input type="text" class="form-control" name="tps_nama" id="tps_nama">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tps_alamat">Alamat TPS</label>
+                                    <textarea class="form-control" name="tps_alamat" id="tps_alamat">
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="btnSave">Save
+                                    changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            One of three columns
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+    })
+
+
+    // $("select#id_partai").val(optionPartai.val());
+    $("select#id_partai").select2({
+        theme: "bootstrap4"
+    });
+
+
+    var optionPartai = $('select#id_partai').find('option[value={{partai.id}}]');
+
+    // optionPartai.prop('selected', 'selected')
+    $('select#id_partai').val("{{partai.id}}").trigger("change");
+
+    $("select#id_caleg").select2({
+        theme: "bootstrap4"
+    });
+
+    $("#openModal").click(function (e) {
+        $('#modalTPS').modal();
+    })
+
+
+    var list_kelurahan = [];
+    var id_kelurahan = null;
+    var id_kecamatan = null;
+
+
+    $('select#id_kecamatan').on("select2:select", function (e) {
+        id_kecamatan = $(e.target).val();
+        if (id_kecamatan !== null) {
+            $('#id_kelurahan').removeAttr("disabled");
+        }
+    });
+
+    $('select#id_kelurahan').on("select2:select", function (e) {
+        id_kelurahan = $(e.target).val();
+        if (id_kelurahan !== null) {
+            $('#openModal').removeAttr("disabled");
+            $('#id_tps').removeAttr('disabled')
+        }
+    });
+
+
+    $('#btnSave').click(function (e) {
+        // var csrftoken = Cookies.get('csrftoken');
+        var nama_tps = $('input[name="tps_nama"]').val()
+        var alamat_tps = $('textarea[name="tps_alamat"]').val()
+        var csrf_token = $("input[name='csrfmiddlewaretoken']").val();
+
+        var kelurahan = list_kelurahan.find(d => d.id == id_kelurahan);
+
+        var tps = {
+            // csrfmiddlewaretoken: csrf_token,
+            nama: nama_tps,
+            alamat: alamat_tps,
+            kelurahan: kelurahan
+        }
+        fetch('/tps/service', {
+            method: 'POST',
+            body: JSON.stringify(tps),
+            headers: {
+                "X-CSRFToken": csrf_token,
+                "Content-Type": "application/json",
+            },
+            // credentials: 'same-origin'
+        }).then(function (res) {
+            return res.json()
+        }).then(res => {
+            $("#modalTPS").modal("hide");
+        })
+    })
+    $('select#id_kecamatan').select2({
+        theme: "bootstrap4"
+    })
+
+
+    $('select#id_kelurahan').select2({
+        placeholder: " === Search kelurahan ===",
+        // allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: "/kelurahan/service",
+            dataType: "json",
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    kecamatan: id_kecamatan
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: []
+                }
+                data["data"].forEach(element => {
+                    list_kelurahan.push(element)
+                    dataResult["results"].push({
+                        id: element.id,
+                        text: element.nama
+                    })
+                })
+                return dataResult;
+            }
+        }
+    })
+
+
+
+    $('select#id_tps').select2({
+        placeholder: "=== Search TPS ===",
+
+        theme: "bootstrap4",
+        ajax: {
+            url: '/tps/service',
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    kelurahan: id_kelurahan,
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: [],
+                };
+                data["data"].forEach(element => {
+                    dataResult['results'].push({
+                        id: element.id,
+                        text: element.nama,
+                    })
+
+                });
+                return dataResult;
+            }
+        }
+    })
+
+</script>
+{% endblock js %}

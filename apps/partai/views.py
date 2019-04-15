@@ -7,6 +7,9 @@ from apps.partai import forms
 
 from braces.views import LoginRequiredMixin, SuperuserRequiredMixin
 
+from rest_framework import response,views,status
+from apps.partai import serializers
+
 class IndexPartaiView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url ='/login'
     template_name = 'partai.html'
@@ -93,4 +96,15 @@ class TambahPartaiView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             'form':form,
             'partai':partai,
         })
+
+class PartaiService(LoginRequiredMixin,SuperuserRequiredMixin,views.APIView):
     
+    def get(self, request):
+        search = request.GET.get("search","")
+        partais = models.Partai.objects.filter(name__icontains=search).all()
+        serializer = serializers.PartaiSerializer(partais,many=True)
+
+        content = {
+            "partai":serializer.data,
+        }
+        return response.Response(content,status=status.HTTP_200_OK)

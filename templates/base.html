@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.min.css' %}">
+  {% block css %}
+    
+  {% endblock css %}
 </head>
 <body>
   <div class="container-scroller">
@@ -46,12 +50,15 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
-
+  <!-- <script src="{% static 'vendor/jquery/jquery.js' %}"></script> -->
   <!-- plugins:js -->
+  <script src="{% static 'js/lightbox-plus-jquery.min.js' %}"></script>
   <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
   <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
+
   <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{% static 'vendor/jquery/add-download-btn.js' %}"></script>
   
 
   <!-- endinject -->

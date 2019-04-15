@@ -3,39 +3,88 @@ from django.views import View
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
-from apps.account import forms
-from apps.account import models
+# from apps.account import forms
+# from apps.account import models
 from braces.views import LoginRequiredMixin,SuperuserRequiredMixin
 
 
-from django.views.generic import CreateView,UpdateView
+# from django.views.generic import CreateView,UpdateView,FormView,DeleteView
 from apps.account.models import Account
 from apps.account.forms import AccountForm
 
+
 class IndexAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
+    login_url='/login'
     template_name = 'account.html'
 
     def get(self, request):
-        form = forms.AccountForm(request.POST)
-        account = models.Account.objects.all()
+        form = AccountForm(request.POST)
+        account =Account.objects.all()
 
         return render(request, self.template_name, {
             'form': form,
-            'account': account
+            'accounts': account
         })
 
 
+# # class AccountCreateViews(CreateView,LoginRequiredMixin,SuperuserRequiredMixin):
+# #     login_url='/login'
+# #     template_name='tambah_account.html'
+# #     form_class=AccountForm
+# #     model= Account
+# #     success_url='account.html'
 
 
+# # class AccountUpdateViews(LoginRequiredMixin,SuperuserRequiredMixin,FormView):
+# #     login_url='/login'
+# #     template_name = 'edit_account.html'
+# #     form_class = AccountForm
+
+
+# #     def get_object(self, pk):
+# #         return Account.objects.get(pk=pk)
+
+# #     def get_queryset(self):
+# #         return Account.objects.all()
+
+# #     def get_form(self):
+# #         obj = self.get_object(pk=self.kwargs['pk'])
+# #         return AccountForm(self.request.POST, instance=obj)
+
+# #     def get_context_data(self, **kwargs):
+# #         ctx = super(AccountUpdateViews, self).get_context_data(**kwargs)
+# #         ctx['object'] = self.get_object(pk=self.kwargs['pk'])
+# #         ctx['accounts'] = self.get_queryset()
+# #         return ctx
+
+# #     def form_valid(self, form):
+# #         form.save()
+
+# #         print('valid')
+# #         return redirect('/account')
+
+# #     def form_invalid(self, form):
+# #         print('invalid')
+# #         return HttpResponse(form.errors)
+
+# class DeleteAccountView(LoginRequiredMixin,SuperuserRequiredMixin,DeleteView):
+#     model = Account
+#     success_url = '/account'
+
+#     def get(self, *args, **kwargs):
+#         return self.post(*args, **kwargs)
+
+class SaveAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
     login_url='/login'
     def post(self, request):
-        form = forms.AccountForm(request.POST)
+        form=AccountForm(request.POST)
         if form.is_valid():
             user = User()
             user.username = form.cleaned_data['username']
             user.set_password(form.cleaned_data['password'])
             user.email = form.cleaned_data['email']
 
+            superuser = form.cleaned_data['superuser']
             
             if superuser == 'on':
                 user.is_superuser = True
@@ -45,36 +94,41 @@ class IndexAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
                 user.is_staff = True
             user.save()
 
-            account = models.Account()
+            account = Account()
             account.user = user
             account.name = form.cleaned_data['name']
             account.no_telpon = form.cleaned_data['no_telpon']
             account.nik = form.cleaned_data['nik']
-            account.gambar = request.FILES['gambar']
+            if request.FILES.getlist('gambar'):
+                account.gambar = request.FILES.getlist('gambar')
             account.save()
             return redirect('/account')
 
-            return HttpResponse(form.errors)
+        return HttpResponse(form.errors)
+
+
+
+
 
 class EditAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url='/login'
     template_name = 'edit_account.html'
 
     def get(self, request, id):
-        obj = models.Account.objects.get(id=id)
+        obj = Account.objects.get(id=id)
         data = {
             'id': obj.id,
-            'name': obj.user,
+            'user': obj.user,
             'name': obj.name,
-            # 'email':obj.email,
-            # 'username':obj.username,
-            # 'password':obj.password,
+            'email':obj.email,
+            'username':obj.username,
+            'password':obj.password,
             'no_telpon': obj.no_telpon,
             'nik': obj.nik,
             'gambar':obj.gambar,
         }
-        form = forms.AccountForm(initial=data)
-        account = models.Account.objects.all()
+        form = AccountForm(initial=data)
+        account = Account.objects.all()
 
         return render(request, self.template_name, {
             'form': form,
@@ -85,9 +139,9 @@ class EditAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
 class UpdateAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url='/login'
     def post(self, request):
-        form = forms.AccountForm(request.POST)
+        form = AccountForm(request.POST)
         if form.is_valid():
-            account = models.Account.objects.get(id=form.cleaned_data['id'])
+            account = Account.objects.get(id=form.cleaned_data['id'])
             account.name = form.cleaned_data['name']
             account.email = form.cleaned_data['email']
             # account.user = form.cleaned_data['user']
@@ -95,8 +149,8 @@ class UpdateAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             account.password = form.cleaned_data['password']
             account.no_telpon = form.cleaned_data['no_telpon']
             account.nik = form.cleaned_data['nik']
-            print(form.cleaned_data['gambar'])
-            account.gambar = request.FILES['gambar']
+            if request.FILES['gambar']:
+                account.gambar = request.FILES['gambar']
             account.save(force_update=True)
 
             return redirect('/account')
@@ -107,7 +161,7 @@ class UpdateAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
 class DeleteAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url='/login'
     def get(self, request, id):
-        obj = models.User.objects.get(id=id)
+        obj = User.objects.get(id=id)
         obj.delete()
 
         
@@ -119,8 +173,8 @@ class TambahAccountView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     template_name = 'tambah_account.html'
 
     def get(self, request):
-        form = forms.AccountForm(request.POST)
-        account = models.Account.objects.all()
+        form =AccountForm(request.POST)
+        account = Account.objects.all()
 
         return render(request, self.template_name, {
             'form': form,

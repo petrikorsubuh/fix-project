@@ -10,4 +10,5 @@ urlpatterns = [
     path('update',views.UpdateKelurahanView.as_view()),
     path('delete/<int:id>',views.DeleteKelurahanView.as_view()),
     path('tambah',views.TambahKelurahanView.as_view()),
+    path('service',views.KelurahanService.as_view()),
 ]

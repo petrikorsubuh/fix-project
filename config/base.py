@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
-    'localhost'
+    'localhost',
+    '10.10.1.26'
 ]
 
 
@@ -54,6 +55,10 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.kecamatan',
     'apps.kelurahan',
+    'apps.user',
+    'apps.service',
+    'apps.public',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -141,5 +146,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static/')
 ]
 
-MEDIA_URL = '/upload_pict/'
-MEDIA_ROOT = 'upload_pict'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        # 'rest_framework.parsers.FormParser',
+        # 'rest_framework.parsers.MultiPartParser',
+    )
+}

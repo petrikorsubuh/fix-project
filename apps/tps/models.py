@@ -12,4 +12,4 @@ class Tps(models.Model):
         return self.nama
     
     class Meta:
-        ordering = ['nama']
+        ordering = ['nama','alamat']

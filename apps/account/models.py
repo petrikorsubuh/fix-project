@@ -10,4 +10,4 @@ class Account(models.Model):
     name = models.CharField(max_length=100)
     no_telpon = models.CharField(max_length=15)
     nik = models.CharField(max_length=20)
-    gambar = models.ImageField(upload_to='upload_pict/',blank=True,null=True, default = 'path/static/img/default-user.png')
+    gambar = models.ImageField(upload_to='upload_pict/', default='default/default-user.png')

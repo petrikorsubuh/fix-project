@@ -10,5 +10,6 @@ urlpatterns = [
     path('update/',views.UpdatePartaiView.as_view()),
     path('delete/<int:id>',views.DeletePartaiView.as_view()),
     path('tambah',views.TambahPartaiView.as_view()),
+    path('service',views.PartaiService.as_view()),
     
 ]

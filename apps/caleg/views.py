@@ -6,6 +6,10 @@ from django.http import HttpResponse
 from apps.caleg import forms
 from braces.views import LoginRequiredMixin, SuperuserRequiredMixin
 
+from rest_framework import views,response,status
+from apps.caleg import serializers
+
+
 class CreateCalegView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url = '/login'
     template_name = 'caleg.html'
@@ -99,3 +103,17 @@ class TambahCalegView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             "form":form,
             "caleg":caleg,
         })
+
+
+class CalegService(LoginRequiredMixin,SuperuserRequiredMixin,views.APIView):
+    
+    def get(self, request):
+
+        search = request.GET.get("search", "")
+        partai = request.GET.get("partai");
+        calegs = models.Caleg.objects.filter(name__icontains=search, partai_id=partai).all()
+        serializer = serializers.CalegSerializer(calegs,many=True)
+        content = {
+            "data":serializer.data,
+        }
+        return response.Response(content,status=status.HTTP_200_OK)

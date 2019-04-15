@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for a in account %}
+                            {% for a in accounts %}
                             <tr>
                                 <td>
                                     {{a.name}}
@@ -53,10 +53,10 @@
                                     {{a.nik}}
                                 </td>
                                 <td class="text-center">
-                                    <a href="/account/edit/{{a.id}}" class="btn btn-success btn-sm">
+                                    <a href="/account/update/{{a.id}}" class="btn btn-success btn-sm">
                                         Ubah
                                     </a>
-                                    <a href="/account/delete/{{a.id}}" class="btn btn-info btn-sm">Hapus</a>
+                                    <a href="{% url 'account:delete' a.user.id %}" class="btn btn-info btn-sm">Hapus</a>
                                 </td>
                             </tr>
                             {% endfor %}

@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from apps.build import views
-from apps.dapil import views as views_dapil
-from apps.account import views as views_account
+# from apps.dapil import views as views_dapil
+# from apps.account import views as views_account
 from apps.authentication import views as views_aut
 from config.views import Index
 
@@ -36,8 +36,8 @@ urlpatterns = [
 
 
     path('dapil/', include(('apps.dapil.urls', 'dapil'), namespace='dapil')),
-    path('kecamatan/', include(('apps.kecamatan.urls', 'dapil'), namespace='kecamatan')),
-    path('kelurahan/', include(('apps.kelurahan.urls', 'dapil'), namespace='kelurahan')),
+    path('kecamatan/', include(('apps.kecamatan.urls', 'kecamatan'), namespace='kecamatan')),
+    path('kelurahan/', include(('apps.kelurahan.urls', 'kelurahan'), namespace='kelurahan')),
     path('kategori/',include(('apps.kategori.urls','kategori'),namespace='kategori')),
     path('caleg/',include(('apps.caleg.urls','caleg'),namespace='caleg')),
     path('tps/',include(('apps.tps.urls','tps'),namespace='tps')),
@@ -47,6 +47,12 @@ urlpatterns = [
     
     
     path('suara/',include(('apps.suara.urls','suara'),namespace='suara')),
+
+
+    #relawan
+    path('relawan/',include(('apps.user.urls','user'),namespace='relawan')),
+    
+    path('api/',include(('apps.service.urls','service'),namespace='service')),
 
     # login
     path('login/', include(('apps.authentication.urls', 'login'), namespace='login')),

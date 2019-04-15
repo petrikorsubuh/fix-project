@@ -10,5 +10,7 @@ urlpatterns = [
     path('update',views.UpdateCalegView.as_view()),
     path('delete/<int:id>',views.DeleteCalegView.as_view()),
     path('tambah',views.TambahCalegView.as_view()),
+    path('service',views.CalegService.as_view()),
+
 
 ]

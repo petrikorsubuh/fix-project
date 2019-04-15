@@ -7,6 +7,9 @@ from apps.kecamatan.models import Kecamatan
 from apps.kecamatan.forms import KecamatanForm
 from braces.views import LoginRequiredMixin,SuperuserRequiredMixin
 
+from rest_framework import response,status,views
+from apps.kecamatan import serializers
+
 class KecamatanView(LoginRequiredMixin,SuperuserRequiredMixin,View):
     login_url = '/login'
     template_name = 'kecamatan.html'
@@ -48,11 +51,11 @@ class EditKecamatanView(LoginRequiredMixin,SuperuserRequiredMixin,View):
         }
 
         form = KecamatanForm(initial=data)
-        kategori = Kecamatan.objects.all()
+        kecamatan = Kecamatan.objects.all()
 
         return render(request,self.template_name,{
             'form':form,
-            'kecamatan':kecamatan
+            'kecamatan':kecamatan,
         })
 
 
@@ -63,7 +66,7 @@ class UpdateKecamatanView(LoginRequiredMixin,SuperuserRequiredMixin,View):
         form = KecamatanForm(request.POST)
         if form.is_valid():
             kecamatan = Kecamatan.objects.get(id=form.cleaned_data['id'])
-            kecamatan.name = form.cleaned_data['name']
+            kecamatan.nama = form.cleaned_data['nama']
             kecamatan.save(force_update=True)
 
         return redirect('/kecamatan')
@@ -90,3 +93,14 @@ class TambahKecamatanView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             'form':form,
             'kategori':kecamatan
         })
+
+class KecamatanService(LoginRequiredMixin,SuperuserRequiredMixin,views.APIView):
+    def get(self, request):
+        kecamatans = Kecamatan.objects.all()
+        serializer=serializers.KecamatanSerializer(kecamatans,many=True)
+
+        content = {
+            "kecamatan":serializer.data,
+        }
+        return response.Response(content,status=status.HTTP_200_OK)
+

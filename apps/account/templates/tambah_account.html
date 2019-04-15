@@ -21,42 +21,43 @@
                 <div class="card-body">
                     <h4 class="card-title">Tambah User</h4>
 
-                    <form action="/account/save" method="post" enctype="multipart/form-data">
+                    <form action="/account/save" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="{{form.name.id_for_label}}">{{form.name.label}}</label>
-                            {{form.name}}
+                            <label for="name">{{form.name.label}}</label>
+                            <input type="text" class="form-control" name="name"
+                                placeholder="Masukan name">
                         </div>
                         <div class="form-group">
-                            <label for="{{form.email.id_for_label}}">
-                            {{form.email.label}}</label>
-                            {{form.email}}
+                            <label for="name">{{form.email.label}}</label>
+                            <input type="text" class="form-control" name="email"
+                                placeholder="Masukan email">
                         </div>
                         <div class="form-group">
-                            <label for="{{form.user_name.id_for_label}}">
-                            {{form.username.label}}</label>
-                            {{form.username}}
+                            <label for="name">{{form.username.label}}</label>
+                            <input type="text" class="form-control" name="username"
+                                placeholder="Masukan username">
                         </div>
                         <div class="form-group">
-                            <label for="{{form.pasword_user.id_for_label}}">
-                            {{form.password.label}}</label>
-                            {{form.password}}
+                            <label for="name">{{form.password.label}}</label>
+                            <input type="text" class="form-control" name="password"
+                                placeholder="Masukan password">
                         </div>
                         <div class="form-group">
-                            <label for="{{form.no_telpon.id_for_label}}">
-                            {{form.no_telpon.label}}</label>
-                            {{form.no_telpon}}
+                            <label for="name">{{form.no_telpon.label}}</label>
+                            <input type="text" class="form-control" name="no_telpon"
+                                placeholder="Masukan no_telpon">
                         </div>
                         <div class="form-group">
-                            <label for="{{form.nik.id_for_label}}">
-                            {{form.nik.label}}</label>
-                            {{form.nik}}
+                            <label for="name">{{form.nik.label}}</label>
+                            <input type="text" class="form-control" name="nik"
+                                placeholder="Masukan nik">
                         </div>
-
                         <div class="form-group">
                             <label for="{{form.gambar.id_for_label}}">
                             {{form.gambar.label}}</label>
                             {{form.gambar}}
+                            <input type="file" name="pict" multiple>
                         </div>
 
                         <div class="form-check form-check-flat form-check-primary">

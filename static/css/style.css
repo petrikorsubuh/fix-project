@@ -20873,9 +20873,11 @@ dl li {
 
 .table th img,
 .table td img {
-  width: 36px;
-  height: 36px;
-  border-radius: 100%;
+  width: 79px;
+  height: 67px;
+  /* width: 36px;
+  height: 36px; */
+  /* border-radius: 100%; */
 }
 
 .table th .badge,

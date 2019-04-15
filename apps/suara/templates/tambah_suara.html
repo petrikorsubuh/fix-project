@@ -1,6 +1,8 @@
-{% extends "user_base.html" %}
+{% extends "base.html" %}
 {% block css %}
+{% load static %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="{% static "/css/select2-bootstrap4.min.css" %}">
 {% endblock css %}
 {% block content %}
 
@@ -8,80 +10,312 @@
 
 <div class="container">
     <div class="row">
-      <div class="col-md-2">
-        One of three columns
-      </div>
-      <div class="content-wrapper col-md-8" style="
+        <div class="col-md-2">
+            One of three columns
+        </div>
+        <div class="content-wrapper col-md-8" style="
     margin-top: 49px;">
-    <div class="page-header">
-        <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                <i class="mdi mdi-home"></i>
-            </span>
-            Tambah Suara
-        </h3>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/suara/">Suara</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah Suara</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="row">
-        <div class="col-md-10 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Tambah Suara</h4>
+            <div class="page-header">
+                <h3 class="page-title">
+                    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                        <i class="mdi mdi-home"></i>
+                    </span>
+                    Tambah Suara
+                </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/suara/">Suara</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Suara</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="row">
+                <div class="col-md-10 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Tambah Suara</h4>
 
-                    <form action="/suara/save" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="{{form.TPS.id_for_label}}">{{form.tps.label}}</label>
-                            {{form.tps}}
+                            <form action="/suara/save" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="{{form.partai.id_for_label}}">{{form.partai.label}}</label>
+                                    <select class="form-control" name="partai" required id="id_partai">
+                                        <option value="">==== Pilih partai ====</option>
+                                        {% for pt in partai %}
+                                        <option value="{{pt.id}}">{{pt.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.caleg.id_for_label}}">{{form.caleg.label}}</label>
+                                    <select class="form-control" name="caleg" id="id_caleg">
+                                        <option value="">==== Pilih caleg ====</option>
+                                        {% for cl in caleg %}
+                                        <option value="{{cl.id}}">{{cl.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.kecamatan.id_for_label}}">{{form.kecamatan.label}}</label>
+                                    <select class="form-control" name="kecamatan" id="id_kecamatan">
+                                        <option value="">==== Pilih kecamatan ====</option>
+                                        {% for kc in kecamatan %}
+                                        <option value="{{kc.id}}">{{kc.nama}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.kelurahan.id_for_label}}">{{form.kelurahan.label}}</label>
+                                    <select class="form-control" name="kelurahan" id="id_kelurahan" disabled>
+                                        <option value="">==== Pilih kelurahan ====</option>
+                                        {% for kl in kelurahan %}
+                                        <option value="{{kl.id}}">{{kl.nama}}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                </div>
+                                <div class="input-group  mb-3">
+                                    {{form.tps.label}}
+                                    <select class="form-control" name="tps" id="id_tps" aria-placeholder="Pilih TPS"
+                                        style="height: calc(2.5rem + 4px)" disabled>
+                                        <option value="null" selected>==== Pilih tps ====</option>
+                                        {% for tp in tps %}
+                                        <option value="{{tp.id}}">{{tp.nama}}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.jumlah_suara.id_for_label}}">
+                                        {{form.jumlah_suara.label}}</label>
+                                    {{form.jumlah_suara}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="{{form.photo.id_for_label}}">
+                                        {{form.pict.label}}</label>
+                                    {{form.pict}}
+                                    <!-- <input type="file" name="pict" multiple> -->
+                                </div>
+                                <button class="btn btn-primary" type="submit">Simpan</button>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="{{form.caleg.id_for_label}}">
-                            {{form.caleg.label}}</label>
-                            {{form.caleg}}
-                        </div>
-                        <div class="form-group">
-                            <label for="{{form.jumlah_suara.id_for_label}}">
-                            {{form.jumlah_suara.label}}</label>
-                            {{form.jumlah_suara}}
-                        </div>
-                        <div class="form-group">
-                            <label for="{{form.photo.id_for_label}}">
-                            {{form.pict.label}}</label>
-                            {{form.pict}}
-                            <input type="file" multiple>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Simpan</button>
-                    </form>
+                    </div>
                 </div>
+
             </div>
         </div>
-            
+        <div class="col-md-2">
+            One of three columns
+        </div>
     </div>
 </div>
-      <div class="col-md-2">
-        One of three columns
-      </div>
-    </div>
-  </div>
 {% endblock content %}
-{% block js %}
-  
+{% block script %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
-// $('#id_tps').select2({
-//   ajax: {
-//     url: 'https://api.github.com/search/repositories',
-//     dataType: 'json'
-//     // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
-//   }
-// });
-option = $('#id_dapil').find('option[value=1]');
-option.prop('selected', 'selected')
-$('#id_dapil').val(option.val());
+    // $('#id_tps').select2({
+    //   ajax: {
+    //     url: 'https://api.github.com/search/repositories',
+    //     dataType: 'json'
+    //     // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+    //   }
+    // });
+    // option = $('#id_dapil').find('option[value=1]');
+    // option.prop('selected', 'selected')
+    // $('#id_dapil').val(option.val());
+    $('select').select2({
+        theme: "bootstrap4"
+    });
+
+    var id_partai = null;
+
+
+    $('select#id_partai').select2({
+        placeholder: "=== Search Partai ===",
+        allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: '/partai/service',
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: [],
+                };
+                data["partai"].forEach(element => {
+                    dataResult['results'].push({
+                        id: element.id,
+                        text: element.name,
+                    })
+
+                });
+                return dataResult;
+            }
+        }
+    });
+
+    $('select#id_partai').on("select2:select", function (e) {
+        id_partai = $(e.target).val();
+    })
+
+    $("select#id_caleg").select2({
+        placeholder: " === Search Caleg ===",
+        allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: "/caleg/service",
+            dataType: "json",
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    partai: id_partai
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: []
+                }
+                data["data"].forEach(element => {
+                    dataResult["results"].push({
+                        id: element.id,
+                        text: element.name
+                    })
+                })
+                return dataResult;
+            }
+        }
+    })
+
+    var list_kelurahan = [];
+    var id_kelurahan = null;
+    var id_kecamatan = null;
+
+
+     $('select#id_kecamatan').on("select2:select", function (e) {
+        id_kecamatan = $(e.target).val();
+        if (id_kecamatan !== null) {
+            $('#id_kelurahan').removeAttr("disabled");
+        }
+    });
+
+    $('select#id_kelurahan').on("select2:select", function (e) {
+        id_kelurahan = $(e.target).val();
+        if (id_kelurahan !== null) {
+            $('#openModal').removeAttr("disabled");
+            $('#id_tps').removeAttr('disabled')
+        }
+    });
+
+
+    $('select#id_kecamatan').select2({
+        placeholder: "=== Search kecamatan ===",
+        allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: '/kecamatan/service',
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: [],
+                };
+                data["kecamatan"].forEach(element => {
+                    dataResult['results'].push({
+                        id: element.id,
+                        text: element.nama,
+                    })
+
+                });
+                return dataResult;
+            }
+        }
+    });
+
+    $('select#id_kecamatan').on("select2:select", function (e) {
+        id_kecamatan = $(e.target).val();
+    })
+
+    $("select#id_kelurahan").select2({
+        placeholder: " === Search kelurahan ===",
+        allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: "/kelurahan/service",
+            dataType: "json",
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    kecamatan: id_kecamatan
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: []
+                }
+                data["data"].forEach(element => {
+                    dataResult["results"].push({
+                        id: element.id,
+                        text: element.nama
+                    })
+                })
+                return dataResult;
+            }
+        }
+    })
+
+
+
+    $('select#id_kelurahan').on("select2:select", function (e) {
+        id_kelurahan = $(e.target).val();
+    })
+
+    $("select#id_tps").select2({
+        placeholder: " === Search tps ===",
+        allowClear: true,
+
+        theme: "bootstrap4",
+        ajax: {
+            url: "/tps/service",
+            dataType: "json",
+            data: function (params) {
+                var query = {
+                    search: params.term,
+                    kelurahan: id_kelurahan
+                }
+                return query;
+            },
+            processResults: function (data) {
+                let dataResult = {
+                    results: []
+                }
+                data["data"].forEach(element => {
+                    dataResult["results"].push({
+                        id: element.id,
+                        text: element.nama
+                    })
+                })
+                return dataResult;
+            }
+        }
+    })
+
+
 </script>
-{% endblock js %}
+{% endblock script %}

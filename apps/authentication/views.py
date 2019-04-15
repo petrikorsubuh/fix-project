@@ -31,7 +31,7 @@ class LoginProccessView(View):
                         return redirect('/caleg')
                     elif user.is_staff:
                         login(request, user)
-                        return redirect('/suara')
+                        return redirect('/relawan')
 
                 messages.error(
                     request, 'Akun tidak diizinkan untuk mengakses halaman ini')

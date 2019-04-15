@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.min.css' %}">
+
 </head>
 <body>
   <div class="container-scroller">
@@ -22,7 +24,7 @@
     {% include 'public_header.html' %}
   </div>
   <!-- container-scroller -->
-
+  <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
   <!-- plugins:js -->
   <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
   <script src="{% static 'vendors/js/vendor.bundle.addons.js' %}"></script>
@@ -35,6 +37,7 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/lightbox-plus-jquery.min.js' %}"></script>
   <!-- End custom js for this page-->
 </body>
 
