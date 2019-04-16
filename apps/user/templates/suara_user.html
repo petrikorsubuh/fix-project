@@ -150,7 +150,7 @@
     });
 
 
-    var optionPartai = $('select#id_partai').find('option[value={{partai.id}}]');
+    var optionPartai = $('select#id_partai').find('option[value={{pt.id}}]');
 
     // optionPartai.prop('selected', 'selected')
     $('select#id_partai').val("{{partai.id}}").trigger("change");
