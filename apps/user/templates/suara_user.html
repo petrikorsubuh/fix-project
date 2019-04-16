@@ -66,14 +66,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="{{form.kelurahan.id_for_label}}">{{form.kelurahan.label}}</label>
-                                    <select class="form-control" name="kelurahan" id="id_kelurahan" disabled>
+                                    <select class="form-control" name="kelurahan" id="id_kelurahan" >
+                                        <option value="">==== Pilih kelurahan ====</option>
+                                        {% for kl in kelurahan %}
+                                        <option value="{{kl.id}}">{{kl.nama}}</option>
+                                        {% endfor %}
 
                                     </select>
                                 </div>
                                 <div class="input-group  mb-3">
                                     <!-- <label for="{{form.tps.id_for_label}}">{{form.tps.label}}</label> -->
                                     <select class="form-control" name="tps" id="id_tps" aria-placeholder="Pilih TPS"
-                                        style="height: calc(2.5rem + 4px)" disabled>
+                                        style="height: calc(2.5rem + 4px)" >
                                         <option value="null" selected>==== Pilih tps ====</option>
                                         {% for tp in tpss %}
                                         <option value="{{tp.id}}">{{tp.nama}}</option>
@@ -143,7 +147,9 @@
     $(document).ready(function () {
     })
 
-
+    $('select').select2({
+        theme: "bootstrap4"
+    });
     // $("select#id_partai").val(optionPartai.val());
     $("select#id_partai").select2({
         theme: "bootstrap4"
@@ -155,9 +161,9 @@
     // optionPartai.prop('selected', 'selected')
     $('select#id_partai').val("{{partai.id}}").trigger("change");
 
-    $("select#id_caleg").select2({
-        theme: "bootstrap4"
-    });
+    // $("select#id_caleg").select2({
+    //     theme: "bootstrap4"
+    // });
 
     $("#openModal").click(function (e) {
         $('#modalTPS').modal();
@@ -180,7 +186,7 @@
         id_kelurahan = $(e.target).val();
         if (id_kelurahan !== null) {
             $('#openModal').removeAttr("disabled");
-            $('#id_tps').removeAttr('disabled')
+            $('#id_tps').removeAttr('disabled');
         }
     });
 

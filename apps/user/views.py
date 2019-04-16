@@ -3,6 +3,7 @@ from django.views import View
 from apps.suara import forms
 from apps.suara import models
 from apps.kecamatan.models import Kecamatan
+from apps.kelurahan.models import Kelurahan
 from apps.partai.models import Partai
 from apps.caleg.models import Caleg
 from apps.tps.models import Tps
@@ -31,6 +32,7 @@ class TambahSuaraView(LoginRequiredMixin, View):
         
         
         kecamatans = Kecamatan.objects.all()
+        kelurahan = Kelurahan.objects.all()
         tpss = Tps.objects.all()
         suara = Suara.objects.all()
 
@@ -40,6 +42,7 @@ class TambahSuaraView(LoginRequiredMixin, View):
             "partai": partai,
             "caleg": caleg,
             "kecamatans": kecamatans,
+            "kelurahan": kelurahan,
             "tpss": tpss,
             "suara": suara,
         })
@@ -53,24 +56,36 @@ class SaveSuaraView(LoginRequiredMixin, View):
         form = forms.SuaraForm(request.POST, request.FILES)
         print(form)
         if form.is_valid():
-            pt_id = form.cleaned_data['partai']
-            partai = Partai.objects.get(id=pt_id)
-            print(pt_id)
+            # pt_id = form.cleaned_data['partai']
+            # partai = Partai.objects.get(id=pt_id)
+            # print(pt_id)
 
-            kc_id = form.cleaned_data['kecamatan']
-            kecamatan = Kecamatan.objects.get(id=kc_id)
+            # kc_id = form.cleaned_data['kecamatan']
+            # kecamatan = Kecamatan.objects.get(id=kc_id)
 
-            tp_id = form.cleaned_data['tps']
-            tps = Tps.objects.get(id=tp_id)
+            # tp_id = form.cleaned_data['tps']
+            # tps = Tps.objects.get(id=tp_id)
 
-            ca_id = form.cleaned_data['caleg']
-            caleg = Caleg.objects.get(id=ca_id)
+            # ca_id = form.cleaned_data['caleg']
+            # caleg = Caleg.objects.get(id=ca_id)
+
+            # suara = models.Suara()
+            # suara.partai = partai
+            # suara.caleg = caleg
+            # suara.kecamatan = kecamatan
+            # suara.kelurahan = kelurahan
+            # suara.tps = tps
+            # suara.jumlah_suara = form.cleaned_data['jumlah_suara']
+            # suara.pict = request.FILES['pict']
+            # suara.save()
 
             suara = models.Suara()
-            suara.partai = partai
-            suara.caleg = caleg
-            suara.kecamatan = kecamatan
-            suara.tps = tps
+            suara.partai = form.cleaned_data['partai']
+            suara.caleg = form.cleaned_data['caleg']
+            suara.kecamatan = form.cleaned_data['kecamatan']
+            suara.kelurahan = form.cleaned_data['kelurahan']
+            print(suara.kelurahan)
+            suara.tps = form.cleaned_data['tps']
             suara.jumlah_suara = form.cleaned_data['jumlah_suara']
             suara.pict = request.FILES['pict']
             suara.save()
