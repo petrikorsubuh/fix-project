@@ -101,6 +101,7 @@ class SaveAccountView(LoginRequiredMixin, SuperuserRequiredMixin, View):
             account.nik = form.cleaned_data['nik']
             if request.FILES.getlist('gambar'):
                 account.gambar = request.FILES.getlist('gambar')
+                
             account.save()
             return redirect('/account')
 
