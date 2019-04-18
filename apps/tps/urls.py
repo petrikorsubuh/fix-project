@@ -11,5 +11,5 @@ urlpatterns = [
     path('delete/<int:id>',views.DeleteTpsViews.as_view()),
     path('tambah',views.TambahTpsView.as_view()),
     path('service',views.TpsService.as_view()),
-    
+    path('service/public',views.PubliTpsService.as_view()),
 ]

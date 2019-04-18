@@ -148,3 +148,17 @@ class TpsService(LoginRequiredMixin, views.APIView):
         return response.Response({
             'message':'Request is not valid'
         },status=status.HTTP_400_BAD_REQUEST)
+
+
+class PubliTpsService(views.APIView):
+
+    # parser_classes=(JSONParser)
+
+    def get(self, request):
+        kelurahan = request.GET.get('kelurahan')
+        tpss = models.Tps.objects.filter(kelurahan=kelurahan).all()
+        serializer = serializers.TpsSerializer(tpss, many=True)
+        content = {
+            "data": serializer.data,
+        }
+        return response.Response(content, status=status.HTTP_200_OK)

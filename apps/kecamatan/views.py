@@ -94,7 +94,7 @@ class TambahKecamatanView(LoginRequiredMixin,SuperuserRequiredMixin,View):
             'kategori':kecamatan
         })
 
-class KecamatanService(LoginRequiredMixin,SuperuserRequiredMixin,views.APIView):
+class KecamatanService(views.APIView):
     def get(self, request):
         kecamatans = Kecamatan.objects.all()
         serializer=serializers.KecamatanSerializer(kecamatans,many=True)

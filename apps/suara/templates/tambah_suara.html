@@ -200,7 +200,7 @@
     var id_kecamatan = null;
 
 
-     $('select#id_kecamatan').on("select2:select", function (e) {
+    $('select#id_kecamatan').on("select2:select", function (e) {
         id_kecamatan = $(e.target).val();
         if (id_kecamatan !== null) {
             $('#id_kelurahan').removeAttr("disabled");
@@ -292,7 +292,7 @@
 
         theme: "bootstrap4",
         ajax: {
-            url: "/tps/service",
+            url: "/tps/service/public",
             dataType: "json",
             data: function (params) {
                 var query = {

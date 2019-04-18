@@ -1,5 +1,17 @@
 database.sqlite
 
+./*.sqlite
+*.sqlite
+
+migrations/
+migrations/*
+migrations/**
+
+__pycache__/
+__pycache__/**
+__pycache__/*
+
+*.pyc
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python

@@ -17,20 +17,21 @@
   <link rel="shortcut icon" href="images/favicon.png" />
   <link rel="stylesheet" type="text/css" href="{% static 'css/lightbox.min.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static "/css/select2-bootstrap4.min.css" %}">
   <style>
-	
-.chart-container {
-  position: relative;
-  margin: auto;
-  height: 80vh;
-  width: auto;
-}
+    .chart-container {
+      position: relative;
+      margin: auto;
+      height: 80vh;
+      width: auto;
+    }
 
-.card-title{
+    /* .card-title{
   margin-top: 100px;
-}
-
-</style>
+} */
+  </style>
 </head>
 
 <body>
@@ -39,29 +40,45 @@
     {% include 'public_header.html' %}
   </div>
   <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Caleg Demokrat</h4>
-	<div class="chart-container">
-          <canvas id="barChart"></canvas>
-	</div>
+    <form action="/" method="GET" style="margin-top:40px;">
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-3">
+          <select name="kec" id="id_kec" class="form-control"></select>
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+          <select name="kel" id="id_kel" class="form-control"></select>
+        </div>
+        <div class="form-group col-sm-12 col-md-3">
+          <select name="tps" id="id_tps" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary btn-block" style="height: 40px;"><i class="mdi mdi-magnify"></i> Filter</button>
         </div>
       </div>
-    </div>
-    <div class="col-md-6 col-sm-12">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Suara Partai</h4>
-	<div class="chart-container">
-          <canvas id="pieChart"></canvas>
-	</div>
+    </form>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Caleg Demokrat</h4>
+            <div class="chart-container">
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Suara Partai</h4>
+            <div class="chart-container">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
   <!-- container-scroller -->
   <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
   <!-- plugins:js -->
@@ -79,10 +96,111 @@
   <script src="{% static 'js/dashboard.js' %}"></script>
   <script src="{% static 'js/lightbox-plus-jquery.min.js' %}"></script>
   <!-- End custom js for this page-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 
-  {% autoescape off %}
+  <!-- {% autoescape off %} -->
   <script>
+
+    var list_kelurahan = [];
+    var id_kelurahan = null;
+    var id_kecamatan = null;
+
+    $('select#id_kec').on("select2:select", function (e) {
+      id_kecamatan = $(e.target).val();
+      if (id_kecamatan !== null) {
+        $('#id_kel').removeAttr("disabled");
+      }
+    });
+
+    $('select#id_kel').on("select2:select", function (e) {
+      id_kelurahan = $(e.target).val();
+      if (id_kelurahan !== null) {
+        $('#id_tps').removeAttr('disabled')
+      }
+    });
+
+    $('select#id_kec').select2({
+      theme: "bootstrap4",
+      placeholder: "==== Filter dengan kecamatan ====",
+      ajax: {
+        url: '/kecamatan/service',
+        dataType: 'json',
+        data: function (params) {
+          var query = {
+            search: params.term,
+          }
+          return query;
+        },
+        processResults: function (data) {
+          let dataResult = {
+            results: [],
+          };
+          data["kecamatan"].forEach(element => {
+            dataResult['results'].push({
+              id: element.id,
+              text: element.nama,
+            })
+
+          });
+          return dataResult;
+        }
+      }
+    });
+    $('select#id_kel').select2({
+      theme: "bootstrap4",
+      placeholder: "==== Filter dengan kelurahan ====",
+      ajax: {
+        url: "/kelurahan/service",
+        dataType: "json",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            kecamatan: id_kecamatan
+          }
+          return query;
+        },
+        processResults: function (data) {
+          let dataResult = {
+            results: []
+          }
+          data["data"].forEach(element => {
+            dataResult["results"].push({
+              id: element.id,
+              text: element.nama
+            })
+          })
+          return dataResult;
+        }
+      }
+    });
+    $('select#id_tps').select2({
+      theme: "bootstrap4",
+      placeholder: "==== Filter dengan tps ====",
+      ajax: {
+        url: "/tps/service/public",
+        dataType: "json",
+        data: function (params) {
+          var query = {
+            search: params.term,
+            kelurahan: id_kelurahan
+          }
+          return query;
+        },
+        processResults: function (data) {
+          let dataResult = {
+            results: []
+          }
+          data["data"].forEach(element => {
+            dataResult["results"].push({
+              id: element.id,
+              text: element.nama
+            })
+          })
+          return dataResult;
+        }
+      }
+    });
 
     var data1 = {
       labels: {{ labels }},
@@ -113,8 +231,8 @@
     var barChart = new Chart(ctx, {
       type: 'bar',
       data: data1,
-responsive: true,
-	maintainAspectRatio: true,
+      responsive: true,
+      maintainAspectRatio: true,
       options: {
         scales: {
           xAxes: [{
@@ -126,8 +244,8 @@ responsive: true,
         }
       }
     });
-    
-    
+
+
     var data2 = {
       labels: {{ labels1 }},
     datasets: [{
@@ -157,8 +275,8 @@ responsive: true,
     var pieChart = new Chart(ctx, {
       type: 'pie',
       data: data2,
-responsive: true,
-maintainAspectRatio: true,
+      responsive: true,
+      maintainAspectRatio: true,
       options: {
         scales: {
           xAxes: [{
@@ -181,7 +299,7 @@ maintainAspectRatio: true,
     //   });
     // }
   </script>
-  {% endautoescape %}
+  <!-- {% endautoescape %} -->
 </body>
 
 </html>

@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="{{form.kelurahan.id_for_label}}">{{form.kelurahan.label}}</label>
-                                    <select class="form-control" name="kelurahan" id="id_kelurahan" >
+                                    <select class="form-control" name="kelurahan" id="id_kelurahan">
                                         <option value="">==== Pilih kelurahan ====</option>
                                         {% for kl in kelurahan %}
                                         <option value="{{kl.id}}">{{kl.nama}}</option>
@@ -77,7 +77,7 @@
                                 <div class="input-group  mb-3">
                                     <!-- <label for="{{form.tps.id_for_label}}">{{form.tps.label}}</label> -->
                                     <select class="form-control" name="tps" id="id_tps" aria-placeholder="Pilih TPS"
-                                        style="height: calc(2.5rem + 4px)" >
+                                        style="height: calc(2.5rem + 4px)">
                                         <option value="null" selected>==== Pilih tps ====</option>
                                         {% for tp in tpss %}
                                         <option value="{{tp.id}}">{{tp.nama}}</option>
@@ -180,7 +180,7 @@
         if (id_kecamatan !== null) {
             $('#id_kelurahan').removeAttr("disabled");
         }
-	console.log(id_kecamatan);
+        console.log(id_kecamatan);
     });
 
     $('select#id_kelurahan').on("select2:select", function (e) {
