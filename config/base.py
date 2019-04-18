@@ -29,7 +29,8 @@ ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
     '10.10.1.26',
-    '36.91.40.131'
+    '36.91.40.131',
+    'qc.hajiakhmad.id'
 ]
 
 
