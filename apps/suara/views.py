@@ -81,7 +81,8 @@ class SaveSuaraView(LoginRequiredMixin, View):
             print(suara.kelurahan)
             suara.tps = form.cleaned_data['tps']
             suara.jumlah_suara = form.cleaned_data['jumlah_suara']
-            suara.pict = request.FILES['pict']
+            if request.FILES.getlist('pict'):
+                account.pict = request.FILES.getlist('pict')
             suara.save()
 
             return redirect ('/suara')
