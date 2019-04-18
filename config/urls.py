@@ -20,13 +20,14 @@ from apps.build import views
 # from apps.account import views as views_account
 from apps.authentication import views as views_aut
 from config.views import Index
-from apps.public.views import ChartPublic
+from apps.public.views import ChartPublic, ChartAdmin
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('',ChartPublic.as_view() ),
+    path('chart',ChartAdmin.as_view() ),
     path('admin/', admin.site.urls),
     path('index', views.IndexView.as_view()),
     path('language/save', views.SaveLanguageView.as_view()),
