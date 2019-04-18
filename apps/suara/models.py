@@ -12,7 +12,7 @@ class Suara(models.Model):
     kelurahan = models.ForeignKey(Kelurahan,on_delete=models.CASCADE,null=True)
     tps = models.ForeignKey(Tps,on_delete=models.CASCADE,null=True)
     jumlah_suara = models.IntegerField()
-    pict = models.ImageField(upload_to='upload_pict/')
+    pict = models.ImageField(upload_to='upload_pict/',null=True)
     create_add =models.DateTimeField(auto_now=True)
 
 
